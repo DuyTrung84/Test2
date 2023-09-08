@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 
+
+interface Person {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +14,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'admin';
+
 }

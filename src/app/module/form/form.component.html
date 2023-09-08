@@ -1,0 +1,51 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item hidden>
+        <nz-form-label nzRequired nzFor="employeeId">Mã nhân viên</nz-form-label>
+        <input nz-input formControlName="employeeId" id="employeeId" />
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+        <nz-form-label nzRequired nzFor="email" nzSpan="24">E-mail</nz-form-label>
+        <nz-form-control nzErrorTip="Đây phải là 1 email!" nzSpan="20">
+            <input nz-input formControlName="email" id="email" placeholder="Nhập email" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+        <nz-form-label nzRequired nzFor="nickname" nzSpan="24">Tên nhân viên</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng nhập tên nhân viên!" nzSpan="20">
+            <input nz-input id="nickname" formControlName="name" placeholder="Nhập tên nhân viên" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+        <nz-form-label nz-col nzSpan="24" nzFor="phone" nzRequired>Số điện thoại</nz-form-label>
+        <nz-form-control [nzValidateStatus]="validateForm.controls['phone']"
+            nzErrorTip="Vui lòng nhập số điện thoại và đúng định dạng" nz-col nzSpan="20">
+            <input formControlName="phone" id="'phone'" nz-input placeholder="Nhập số điện thoại" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+        <nz-form-label nzFor="type" nzRequired nzSpan="24">Loại nhân viên</nz-form-label>
+        <nz-select formControlName="type" ngModel="NV1" nzSpan="24">
+            <nz-option nzValue="NV1" nzLabel="NV1"></nz-option>
+            <nz-option nzValue="NV2" nzLabel="NV2"></nz-option>
+            <nz-option nzValue="NV3" nzLabel="NV3"></nz-option>
+        </nz-select>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+        <nz-form-label nzFor="status" nzRequired nzSpan="24">Trang thái</nz-form-label>
+        <nz-select formControlName="status" ngModel="Inactive">
+            <nz-option nzValue="Inactive" nzLabel="Inactive" nzSpan="24"></nz-option>
+            <nz-option nzValue="Active" nzLabel="Active" nzSpan="24"></nz-option>
+        </nz-select>
+    </nz-form-item>
+
+    <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="0">
+            <button nz-button nzType="primary">Lưu</button>
+        </nz-form-control>
+    </nz-form-item>
+</form>
