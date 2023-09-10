@@ -14,6 +14,7 @@ export class TableComponent {
   searchTerm: string = '';
   searchResults: IEmployee[] = [];
   listOfOriginalData: IEmployee[] = [];
+  selectedSearchField: string = 'disabled';
 
   constructor(private modal: NzModalService) { }
   @Output() listOfData: IEmployee[] = [
@@ -84,13 +85,30 @@ export class TableComponent {
 
   search() {
     this.listOfOriginalData = [...this.listOfData];
-    this.searchResults = this.listOfData.filter(item => item.name.includes(this.searchTerm));
-    console.log(this.searchResults);
+    switch (this.selectedSearchField) {
+      case 'email':
+        this.searchResults = this.listOfData.filter(item => item.email?.includes(this.searchTerm));
+        break;
+      case 'type':
+        this.searchResults = this.listOfData.filter(item => item.type.includes(this.searchTerm));
+        break;
+      case 'phone':
+        this.searchResults = this.listOfData.filter(item => item.phone.includes(this.searchTerm));
+        break;
+      case 'employeeId':
+        this.searchResults = this.listOfData.filter(item => item.employeeId?.includes(this.searchTerm));
+        break;
+      default:
+        this.searchResults = this.listOfData.filter(item => item.name.includes(this.searchTerm));
+        break;
+    }
   }
+
   resetSearch() {
     this.searchTerm = '';
     this.searchResults = [];
     this.listOfData = [...this.listOfOriginalData];
   }
+
 }
 
