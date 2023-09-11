@@ -28,6 +28,11 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+
+
 registerLocaleData(en);
 
 @NgModule({
@@ -57,7 +62,10 @@ registerLocaleData(en);
     NzDropDownModule,
     NzModalModule,
     NzGridModule,
-    NzEmptyModule
+    NzEmptyModule,
+    NzAlertModule,
+    NzNotificationModule,
+    NzMessageModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

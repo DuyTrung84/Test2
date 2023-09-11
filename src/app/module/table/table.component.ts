@@ -9,18 +9,20 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent {
-  confirmModal?: NzModalRef; // For testing by now
-  selectedEmployeeId: string | null = null;
-  searchTerm: string = '';
-  searchResults: IEmployee[] = [];
-  listOfOriginalData: IEmployee[] = [];
-  selectedSearchField: string = 'disabled';
-
   constructor(private modal: NzModalService) { }
   @Output() listOfData: IEmployee[] = [
     { employeeId: this.generateRandomEmployeeId(), name: 'Nguyễn Văn A', type: 'NV3', phone: '0123456789', email: 'ahihi123@gmail.com', status: 'Inactive' },
     { employeeId: this.generateRandomEmployeeId(), name: 'Nguyễn Văn B', type: 'NV1', phone: '0123456789', email: 'trung123@gmail.com', status: 'Inactive' }
   ];
+  confirmModal?: NzModalRef; // For testing by now
+  selectedEmployeeId: string | null = null;
+  searchTerm: string = '';
+  searchResults: IEmployee[] = [];
+  listOfOriginalData: IEmployee[] = this.listOfData;
+  // placeholderInput: string = '';
+  selectedSearchField: string = 'tên nhân viên';
+
+
 
 
 
@@ -37,19 +39,19 @@ export class TableComponent {
   open(): void {
     this.visible = true;
   }
-
   close(): void {
     this.visible = false;
+    this.selectedEmployeeId = null;
+    console.log(this.selectedEmployeeId);
+
   }
   changeStatusButton(employeeId: string): void {
     const employee = this.listOfData.find((emp) => emp.employeeId === employeeId);
-
     if (employee) {
       employee.status = employee.status === 'Active' ? 'Inactive' : 'Active';
     }
 
   }
-
   statusConfirm(employeeId: string): void {
     const employee = this.listOfData.find((emp) => emp.employeeId === employeeId);
     const title: string = employee?.status === "Active" ? 'Khóa nhân viên' : 'Mở khóa nhân viên'
@@ -81,6 +83,8 @@ export class TableComponent {
   editEmployee(employeeId: string): void {
     this.selectedEmployeeId = employeeId;
     this.open();
+    console.log(this.selectedEmployeeId);
+
   }
 
   search() {
@@ -89,13 +93,13 @@ export class TableComponent {
       case 'email':
         this.searchResults = this.listOfData.filter(item => item.email?.includes(this.searchTerm));
         break;
-      case 'type':
+      case 'loại nhân viên':
         this.searchResults = this.listOfData.filter(item => item.type.includes(this.searchTerm));
         break;
-      case 'phone':
+      case 'số điện thoại':
         this.searchResults = this.listOfData.filter(item => item.phone.includes(this.searchTerm));
         break;
-      case 'employeeId':
+      case 'mã nhân viên':
         this.searchResults = this.listOfData.filter(item => item.employeeId?.includes(this.searchTerm));
         break;
       default:

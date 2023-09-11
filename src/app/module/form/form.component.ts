@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzNotificationPlacement, NzNotificationService } from 'ng-zorro-antd/notification';
 import { IEmployee } from 'src/app/interface/employee';
 
 @Component({
@@ -10,9 +12,18 @@ import { IEmployee } from 'src/app/interface/employee';
 export class FormComponent implements OnInit {
 
   @Input() listOfData: IEmployee[] = [];
-  constructor(private fb: UntypedFormBuilder) { }
+  constructor(
+    private fb: UntypedFormBuilder,
+    private message: NzMessageService,
+    private notification: NzNotificationService
+  ) { }
 
   validateForm!: UntypedFormGroup;
+  isVisible = false;
+  placement = 'top';
+  titleNotification: string = '';
+  contentNotification: string = '';
+
   @Input() selectedEmployeeId: string | null = null;
 
   generateRandomEmployeeId(): string {
@@ -54,7 +65,7 @@ export class FormComponent implements OnInit {
   submitForm(): void {
     if (this.validateForm.valid) {
       if (this.selectedEmployeeId) {
-        const updatedEmployee: IEmployee = {
+        const updateEmployee: IEmployee = {
           employeeId: this.selectedEmployeeId,
           name: this.validateForm.value.name,
           type: this.validateForm.value.type,
@@ -65,8 +76,9 @@ export class FormComponent implements OnInit {
 
         const index = this.listOfData.findIndex((employee) => employee.employeeId === this.selectedEmployeeId);
         if (index !== -1) {
-          this.listOfData[index] = updatedEmployee;
+          this.listOfData[index] = updateEmployee;
         }
+        this.createBasicNotification('Sửa thành công')
       } else {
         const newEmployee: IEmployee = {
           employeeId: this.generateRandomEmployeeId(),
@@ -78,6 +90,7 @@ export class FormComponent implements OnInit {
         };
 
         this.listOfData.push(newEmployee);
+        this.createBasicNotification('Thêm thành công')
         this.validateForm.reset();
       }
 
@@ -88,8 +101,20 @@ export class FormComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+      this.createMessage('error')
     }
   }
 
+  createMessage(type: string): void {
+    this.message.create(type, `${type}`);
+  }
 
+
+  createBasicNotification(message: string): void {
+    this.notification.blank(
+      message,
+      '',
+      { nzPlacement: 'top' }
+    );
+  }
 }
